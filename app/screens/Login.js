@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, Button, Alert, ActivityIndicator } from 'react-native'
 
-// import Pusher from 'pusher-js/react-native';
+import Pusher from 'pusher-js/react-native';
+
+Pusher.logToConsole = true; // enable pusher logging - don't include this in production
+
 
 // Class component's static variable was replaced by this for functional component
 export const navigationOptions = {
@@ -16,6 +19,16 @@ export default function Login() {
   const [pusher, setPusher] = useState(null); // variable for storing the Pusher reference
   const [myChannel, setMyChannel] = useState(null); // to store the channel assigned to this user
 
+  React.useEffect(() => {
+    const pusherInstance = new Pusher('ea50f5fb77e76d3945d3', {
+      cluster: 'ap3'
+    })
+
+    const channel = pusherInstance.subscribe('my-channel');
+    channel.bind('my-event', function (data) {
+      alert(JSON.stringify(data))
+    })
+  }, [])
 
   return (
     <View style={styles.container}>
