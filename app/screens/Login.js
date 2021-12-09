@@ -1,5 +1,7 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, TextInput, Button, Alert, ActivityIndicator } from 'react-native'
+
+// import Pusher from 'pusher-js/react-native';
 
 // Class component's static variable was replaced by this for functional component
 export const navigationOptions = {
@@ -8,9 +10,31 @@ export const navigationOptions = {
 
 
 export default function Login() {
+
+  const [username, setUsername] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [pusher, setPusher] = useState(null); // variable for storing the Pusher reference
+  const [myChannel, setMyChannel] = useState(null); // to store the channel assigned to this user
+
+
   return (
     <View style={styles.container}>
-      <Text>Login Screen</Text>
+      <View style={styles.topContent}>
+        <Text style={styles.bigText}>RNMemory</Text>
+      </View>
+
+      <View style={styles.mainContent}>
+        <TextInput
+          style={styles.text_field}
+          onChangeText={username => {
+            setUsername(username)
+          }}
+          value={username}
+          placeholder={'Enter your username'}
+        />
+      </View>
+
+
     </View>
   )
 }
